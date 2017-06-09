@@ -1,0 +1,179 @@
+﻿<html>
+<head>
+	<title>FalloutQuest: Origin</title>
+	
+	<meta charset="utf-8">
+	
+	<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="css/bootstrap-theme.min.css" type="text/css" rel="stylesheet" />
+	
+	<script type='text/javascript' src="js/jquery-3.2.1.min.js"></script>
+	<script type='text/javascript' src="js/jquery-ui.min.js"></script>
+	<script type='text/javascript' src="js/bootstrap.min.js"></script>
+	
+	<script type='text/javascript' src="js/src/map.js"></script>
+	<script type='text/javascript' src="js/src/inventory.js"></script>
+	<script type='text/javascript' src="js/src/terminals.js"></script>
+	<script type='text/javascript' src="js/src/craft.js"></script>
+	
+	<style>
+		a {
+			color: #20d972;
+		}
+		
+		td {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		input {
+			border-color: #20d972;
+		}
+		
+		.nav-tabs {
+			border-bottom: 1px solid #20d972;
+		}
+		
+		.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+			color: #20d972;
+			background-color: #000;
+			border: 1px solid #20d972;
+			border-bottom-color: transparent;
+		}
+				
+		.nav-tabs>li>a:hover {			
+			color: #20d972;
+			background-color: #0f2f1b;
+			border: 1px solid #20d972;
+		}
+		
+		.btn-submit {
+			background-color: #0f2f1b;
+		}
+		.btn-submit:hover {
+			color: #20d972;
+			background-color: #103a20;
+		}
+	</style>
+</head>
+<body class="nav-xs" style="background-color: black; color: #20d972; font-size: 0px;">
+	<div style="background-color: #000;">
+		<div>
+			<div class="row">
+				<table style="width: 773px; margin: auto;">
+					<tr>
+						<td style="vertical-align: top;">
+							<img src="images/top-left.png"/>
+						</td>
+						<td style="vertical-align: top;">
+							<img src="images/top.png"/>
+						</td>
+						<td style="vertical-align: top;">
+							<img src="images/top-right.png"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top;">
+							<img src="images/left.png" style='width: 119px; height: 679px;'/>
+						</td>
+						<td>
+							<div class="col-xs-12" style="width: 586px">
+								<div class="row text-left">
+									<div class="col-xs-3">
+										<img src="images/PipBoy3000.png" style="width: 100px;"/>
+									</div>
+									<div class="col-xs-9">
+										<span style="font-size: 45px;"><strong>PipBoy 3001</strong></span>				
+									</div>
+								</div>
+								<div class="row" style='padding: 5px; padding-top: 15px;'>
+									<form action="javascript:submitCode()">
+										<span>Введите код:<span>
+										<input type='text' id='code' style="background-color: #0a1b10;  color: #20d972"/>
+										<input type="submit" class="btn btn-sm btn-submit" value="Применить"/>
+									</form>
+								</div>
+								<div class="row" style="border: 0px solid #ddd; padding-top: 0px;">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-toggle="tab" href="#map">Карта</a></li>
+										<li><a data-toggle="tab" href="#inventory">Инвентарь</a></li>
+										<li><a data-toggle="tab" href="#terminals">Сообщения</a></li>
+										<li><a data-toggle="tab" href="#craft">Крафт</a></li>
+									</ul>
+									<div class="tab-content" style="padding: 5px; border: 0px solid #20d972; border-top: 0px; height: 500px;">					
+										<div id="map" class="tab-pane fade in active">						
+											<div style="position:relative; overflow: hidden; height: 490px;">							
+												<img id="mapImg" class="ui-widget-content" src="images/nik-map2.jpg" style="cursor: move"/>
+												<div id="locations" class="ui-widget-content"  style="positions: absolute; background-color:#123456;">
+													
+												</div>							
+											</div>						
+										</div>
+										
+										<div id="inventory" class="tab-pane fade">
+											Inventory
+										</div>
+										
+										<div id="terminals" class="tab-pane fade">
+											<div id="terminalsContent" style="position:relative; overflow: hidden; height: 490px;" >
+												
+											</div>
+										</div>
+										
+										<div id="craft" class="tab-pane fade">
+											Craft
+										</div>					
+									</div>
+								</div>	
+							</div>
+						</td>
+						<td style="vertical-align: top;">
+							<img src="images/right.png" style='width: 68px; height: 679px;'/>
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top;">
+							<img src="images/bottom-left.png"/>
+						</td>
+						<td style="vertical-align: bottom;">
+							<img src="images/bottom.png"/>
+						</td>
+						<td style="vertical-align: top;">
+							<img src="images/bottom-right.png"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		var game = {
+			currentInterface: Map,
+			interfaces: {
+				map: Map,
+				inventory: Inventory,
+				terminals: Terminals,
+				craft: Craft
+			},
+			
+			setInterface(interfaceName) {
+				this.currentInterface = this.interfaces[interfaceName];			
+				this.currentInterface.show();
+			}
+		};
+	
+		$(document).ready(function() {	
+			$('ul.nav li').click(function(e) {
+				var interfaceName = $($(e.target).attr('href')).attr('id');
+				game.setInterface(interfaceName);
+			})
+
+			Map.init();
+			Terminals.init();	
+
+			game.setInterface('map');
+		})
+	</script>
+</body>
+</html>

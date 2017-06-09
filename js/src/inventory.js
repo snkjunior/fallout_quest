@@ -1,0 +1,9 @@
+var Inventory = {
+	init() {
+		
+	},
+	
+	show() {
+		
+	},
+}
